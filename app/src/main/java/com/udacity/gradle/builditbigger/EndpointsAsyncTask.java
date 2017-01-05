@@ -21,6 +21,8 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
     private static MyApi myApiService = null;
     private Context context;
 
+    public String jokeAsync;
+
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
         if(myApiService == null) {  // Only do this once
@@ -57,16 +59,13 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
     protected void onPostExecute(String result) {
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
 
-        String joke = retrieveJoke();
+        JavaJokeClass jokeClass = new JavaJokeClass();
+        jokeAsync = jokeClass.getAnotherJoke();
 
         Intent intent = new Intent(context, AndroidLibraryActivity.class);
-        intent.putExtra(AndroidLibraryActivity.JOKE_EXTRA, joke);
+        intent.putExtra(AndroidLibraryActivity.JOKE_EXTRA, jokeAsync);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
-    }
-
-    public String retrieveJoke() {
-        JavaJokeClass jokeClass = new JavaJokeClass();
-        return jokeClass.getAnotherJoke();
     }
 }
 
