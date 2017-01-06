@@ -31,13 +31,9 @@ public class EndpointsAsyncTaskTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         EndpointsAsyncTask task = new EndpointsAsyncTask();
-        task.execute(new Pair<Context, String>(appContext, "Manfred"));
+        String joke = task.execute(new Pair<Context, String>(appContext, "Manfred")).get();
 
-        JavaJokeClass jokeClass = new JavaJokeClass();
-        String joke = jokeClass.getAnotherJoke();
-
+        assertTrue(joke.equals("Is your name Wi-Fi? Because I'm feeling a connection."));
         assertNotNull(joke);
-        onView(withId(R.id.joke))
-                .check(matches(withText(joke)));
     }
 }
